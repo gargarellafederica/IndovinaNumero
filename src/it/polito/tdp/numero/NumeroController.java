@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.numero.model.NumeroModel;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -47,7 +48,8 @@ public class NumeroController {
 		txtMessaggi.clear();
 		txtTentativo.clear();
 		
-		txtRimasti.setText(Integer.toString(model.getTMAX()));
+		//con il binding non mi serve più settare il testo di tentativi
+		//txtRimasti.setText(Integer.toString(model.getTMAX()));
 
 		// Comunico al modello di iniziare una nuova partita
 		model.newGame();
@@ -88,7 +90,8 @@ public class NumeroController {
 				txtMessaggi.appendText("Tentativo troppo ALTO\n");
 
 		// Aggiornare interfaccia con n. tentativi rimasti
-		txtRimasti.setText(Integer.toString(model.getTMAX()-model.getTentativiFatti()));
+		//con il binding non mi serve più settare il testo di tentativi
+		//txtRimasti.setText(Integer.toString(model.getTMAX()-model.getTentativiFatti()));
 
 		if(!model.isInGioco()) {
 			//la partita è finita!
@@ -114,6 +117,8 @@ public class NumeroController {
 	
 	public void setModel(NumeroModel model) {
 		this.model = model;
+		//aggiunto il collegamento modello-vista con le properties per eliminare le set test di tentativi 
+		txtRimasti.textProperty().bind(Bindings.convert(model.tentativiFattiProperty()));
 	}
 
 }
